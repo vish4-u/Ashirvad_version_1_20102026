@@ -74,6 +74,9 @@ label{font-size:.88rem;font-weight:600}
 input,textarea,select{width:100%;padding:11px 12px;margin-top:5px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:inherit}
 input:focus,textarea:focus,select:focus{outline:2px solid var(--brand);border-color:transparent}
 footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:.9rem;text-align:center}
+.countries{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:0 auto 14px;max-width:700px}
+.countries span{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:3px 12px;font-size:.82rem}
+.countries b{color:var(--brand)}
 </style>
 </head>
 <body>
@@ -244,13 +247,87 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
 </section>
 </main>
 
-<footer><div class="wrap">© <span id="yr">2026</span> Ashirvaad. All rights reserved. · Designed with ❤️ by your digital partner.</div></footer>
+<footer>
+
+    <div class="wrap">
+    <div class="visitors">👥 Unique visitors: <b id="visitorCount">…</b> <span id="myCountry"></span></div>
+    <div class="countries" id="countryList"></div>
+    © <span id="yr">2026</span> Aassheervaad. All rights reserved. · Designed with ❤️ by your digital partner.
+  </div>
+  
+  <div class="wrap">© <span id="yr">2026</span> Ashirvaad. All rights reserved. · Designed with ❤️ by your digital partner.</div></footer>
 
 <script>
 document.getElementById('yr').textContent=new Date().getFullYear();
 const links=document.getElementById('links');
 document.getElementById('menu').onclick=()=>links.classList.toggle('open');
 links.querySelectorAll('a').forEach(a=>a.onclick=()=>links.classList.remove('open'));
+
+  // Unique visitors: total + by country (one count per browser)
+(async function () {
+  const NS = 'https://api.counterapi.dev/v1/ashirvaad-in/';
+  // Countries shown in the list. Add more 2-letter codes if you like.
+  const COUNTRIES = ['IN','US','GB','AE','CA','AU','SG','DE','SA','PK'];
+  const names = new Intl.DisplayNames(['en'], { type: 'region' });
+  const nameOf = c => { try { return c === 'XX' ? 'Unknown' : names.of(c); } catch (e) { return c; } };
+  const num = d => Number((d && (d.count ?? d.value)) || 0);
+
+  async function call(key, up) {
+    try {
+      const r = await fetch(NS + key + (up ? '/up' : ''));
+      if (!r.ok) return 0;
+      return num(await r.json());
+    } catch (e) { return 0; }
+  }
+
+  async function detectCountry() {
+    try { const d = await (await fetch('https://ipwho.is/')).json(); if (d.country_code) return d.country_code; } catch (e) {}
+    try { const d = await (await fetch('https://api.country.is/')).json(); if (d.country) return d.country; } catch (e) {}
+    const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '');
+    return /Kolkata|Calcutta/.test(tz) ? 'IN' : 'XX';
+  }
+
+  const $ = id => document.getElementById(id);
+  try {
+    let isNew = true, code = null;
+    try { isNew = !localStorage.getItem('aas_visited'); code = localStorage.getItem('aas_country'); } catch (e) {}
+    if (!code) code = await detectCountry();
+
+    let total;
+    if (isNew) {
+      total = await call('unique-visitors', true);
+      await call('country-' + code, true);
+      try { localStorage.setItem('aas_visited', '1'); localStorage.setItem('aas_country', code); } catch (e) {}
+    } else {
+      total = await call('unique-visitors', false);
+    }
+    $('visitorCount').textContent = total.toLocaleString('en-IN');
+
+    // Counts per country (cached for 5 minutes to save requests)
+    let stats = null;
+    try {
+      const c = JSON.parse(sessionStorage.getItem('aas_stats') || 'null');
+      if (c && Date.now() - c.t < 300000 && !isNew) stats = c.s;
+    } catch (e) {}
+    if (!stats) {
+      const keys = COUNTRIES.includes(code) ? COUNTRIES : COUNTRIES.concat(code);
+      const vals = await Promise.all(keys.map(k => call('country-' + k, false)));
+      stats = {}; keys.forEach((k, i) => stats[k] = vals[i]);
+      try { sessionStorage.setItem('aas_stats', JSON.stringify({ t: Date.now(), s: stats })); } catch (e) {}
+    }
+
+    $('myCountry').textContent = '· You are visiting from ' + nameOf(code);
+
+    const rows = Object.entries(stats).filter(e => e[1] > 0).sort((a, b) => b[1] - a[1]);
+    const shown = rows.reduce((s, e) => s + e[1], 0);
+    const others = Math.max(0, total - shown);
+    let html = rows.map(e => '<span>' + nameOf(e[0]) + ': <b>' + e[1].toLocaleString('en-IN') + '</b></span>').join('');
+    if (others > 0) html += '<span>Others: <b>' + others.toLocaleString('en-IN') + '</b></span>';
+    $('countryList').innerHTML = html;
+  } catch (e) {
+    $('visitorCount').textContent = '–';
+  }
+})();
 </script>
 </body>
 </html>
