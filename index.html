@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aassheervaad – Your Digital Partner</title>
+<meta name="description" content="Aassheervaad designs, builds and digitises: websites, e-commerce, SEO and process automation that help businesses grow.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+<style>
+:root{--bg:#f7fafc;--surface:#fff;--text:#0f172a;--muted:#475569;--brand:#0284c7;--brand2:#0ea5a4;--line:#e2e8f0;--soft:#e0f2fe}
+@media (prefers-color-scheme:dark){:root{--bg:#0b1220;--surface:#111b2e;--text:#e5edf7;--muted:#9fb0c6;--brand:#38bdf8;--brand2:#2dd4bf;--line:#1f2d45;--soft:#0f2a44}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+section{padding:72px 0}
+h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:8px}
+.sub{color:var(--muted);max-width:640px;margin-bottom:36px}
+.tag{display:inline-block;color:var(--brand);font-weight:600;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;padding:12px 24px;border-radius:10px;font-weight:600;border:0;cursor:pointer;font-size:1rem}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-weight:800;font-size:1.25rem;background:linear-gradient(135deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.links{display:flex;gap:22px;align-items:center;font-size:.95rem}
+.links a:hover{color:var(--brand)}
+#menu{display:none;background:none;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:6px 10px;font-size:1.1rem}
+@media(max-width:860px){#menu{display:block}.links{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--surface);padding:16px;border-bottom:1px solid var(--line)}.links.open{display:flex}}
+.hero{padding:96px 0 72px;background:radial-gradient(ellipse at top right,var(--soft),transparent 60%)}
+.hero h1{font-size:clamp(2.1rem,5vw,3.6rem);line-height:1.1;max-width:780px;margin-bottom:18px}
+.hero p{color:var(--muted);max-width:600px;font-size:1.1rem;margin-bottom:28px}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:48px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.stat b{font-size:1.8rem;color:var(--brand);display:block}
+.stat span{color:var(--muted);font-size:.9rem}
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;transition:.2s}
+.card:hover{transform:translateY(-4px);border-color:var(--brand)}
+.ico{font-size:1.8rem;width:52px;height:52px;display:grid;place-items:center;background:var(--soft);border-radius:12px;margin-bottom:14px}
+.card h3{margin-bottom:6px;font-size:1.1rem}
+.card p,.card li{color:var(--muted);font-size:.95rem}
+.card ul{margin:10px 0 0 18px}
+.alt{background:var(--surface);border-block:1px solid var(--line)}
+.steps{counter-reset:s;display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.step{counter-increment:s;position:relative;padding:22px;border-radius:14px;background:var(--bg);border:1px solid var(--line)}
+.step::before{content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--brand);color:#fff;font-weight:700;margin-bottom:10px}
+.step p{color:var(--muted);font-size:.92rem}
+.proj .thumb{height:150px;border-radius:12px;margin-bottom:14px;display:grid;place-items:center;font-size:2.6rem;background:linear-gradient(135deg,var(--soft),var(--surface));border:1px solid var(--line)}
+.proj a{color:var(--brand);font-weight:600}
+.about{display:grid;gap:40px;grid-template-columns:1.2fr 1fr;align-items:center}
+@media(max-width:860px){.about{grid-template-columns:1fr}}
+.about p{color:var(--muted);margin-bottom:14px}
+.vals{display:grid;gap:12px}
+.vals div{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--brand);border-radius:10px;padding:14px 16px}
+.vals small{color:var(--muted);display:block}
+.leader{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-bottom:28px}
+.person{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;text-align:center}
+.leader .person{display:flex;gap:18px;text-align:left;align-items:flex-start}
+.avatar{flex:none;width:84px;height:84px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.6rem;background:linear-gradient(135deg,var(--brand),var(--brand2));margin:0 auto 12px}
+.leader .avatar{margin:0}
+.role{color:var(--brand);font-weight:600;font-size:.88rem;margin-bottom:6px}
+.person p{color:var(--muted);font-size:.92rem}
+.person .mail{display:inline-block;margin-top:8px;color:var(--brand);font-size:.88rem}
+.team{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.contact{display:grid;gap:36px;grid-template-columns:1fr 1.2fr}
+@media(max-width:860px){.contact{grid-template-columns:1fr}}
+.info p{margin-bottom:10px;color:var(--muted)}
+form{display:grid;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px}
+label{font-size:.88rem;font-weight:600}
+input,textarea,select{width:100%;padding:11px 12px;margin-top:5px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:inherit}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--brand);border-color:transparent}
+footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:.9rem;text-align:center}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="#home" class="logo">Aassheervaad</a>
+      <button id="menu" aria-label="Toggle menu">☰</button>
+      <div class="links" id="links">
+        <a href="#services">Services</a>
+        <a href="#digitise">Digitisation</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#about">About</a>
+        <a href="#team">Team</a>
+        <a href="#contact" class="btn" style="padding:8px 18px">Free Consultation</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="wrap">
+    <span class="tag">Your Digital Partner</span>
+    <h1>Crafting exceptional digital experiences &amp; digitising your business</h1>
+    <p>At Aassheervaad, we create stunning, functional and high-performing websites, and move your manual processes online, so you can grow faster and connect with your audience.</p>
+    <div class="cta">
+      <a href="#contact" class="btn">Get a Free Consultation</a>
+      <a href="#digitise" class="btn ghost">See how we digitise</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>2024</b><span>Founded</span></div>
+      <div class="stat"><b>100%</b><span>Mobile-responsive builds</span></div>
+      <div class="stat"><b>24/7</b><span>Ongoing support</span></div>
+      <div class="stat"><b>End-to-end</b><span>Concept to maintenance</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="alt">
+  <div class="wrap">
+    <span class="tag">What we do</span>
+    <h2>Our Core Capabilities</h2>
+    <p class="sub">Everything you need to build, grow and run your business online.</p>
+    <div class="grid">
+      <div class="card"><div class="ico">🎨</div><h3>Web Design &amp; UI/UX</h3><p>Crafting visually appealing, user-friendly interfaces that engage visitors from the first click.</p></div>
+      <div class="card"><div class="ico">💻</div><h3>Custom Web Development</h3><p>Scalable, secure and high-performance websites tailored to your unique business needs.</p></div>
+      <div class="card"><div class="ico">🛒</div><h3>E-commerce Solutions</h3><p>Online stores that convert visitors into loyal customers with seamless shopping experiences.</p></div>
+      <div class="card"><div class="ico">📈</div><h3>SEO &amp; Digital Marketing</h3><p>Boost your online visibility and drive targeted traffic for maximum reach.</p></div>
+      <div class="card"><div class="ico">🛠️</div><h3>Website Maintenance &amp; Support</h3><p>Keep your site secure, fast and up to date with continuous support and optimisation.</p></div>
+      <div class="card"><div class="ico">📱</div><h3>Mobile Responsiveness</h3><p>Sites that look and work flawlessly on every device, from desktops to smartphones.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="digitise">
+  <div class="wrap">
+    <span class="tag">Our main purpose</span>
+    <h2>Digitise your processes</h2>
+    <p class="sub">Replace paperwork, spreadsheets and phone calls with simple online systems that save time, cut errors and give you real-time visibility.</p>
+    <div class="grid" style="margin-bottom:36px">
+      <div class="card"><div class="ico">⚙️</div><h3>Workflow Automation</h3><ul><li>Approvals and task routing</li><li>Automatic reminders and alerts</li></ul></div>
+      <div class="card"><div class="ico">🗂️</div><h3>Online Portals &amp; Dashboards</h3><ul><li>Customer, vendor and staff portals</li><li>Live reports and analytics</li></ul></div>
+      <div class="card"><div class="ico">📄</div><h3>Document &amp; Records Digitisation</h3><ul><li>Secure cloud storage</li><li>Searchable digital records</li></ul></div>
+      <div class="card"><div class="ico">💳</div><h3>Online Booking &amp; Payments</h3><ul><li>Appointments and orders</li><li>Invoicing and payment gateways</li></ul></div>
+    </div>
+    <div class="steps">
+      <div class="step"><h3>Discover</h3><p>We map your current manual process and find where time is lost.</p></div>
+      <div class="step"><h3>Design</h3><p>We design a simple digital flow your team and customers will love.</p></div>
+      <div class="step"><h3>Build</h3><p>Agile development with regular demos and transparent communication.</p></div>
+      <div class="step"><h3>Launch &amp; Support</h3><p>Training, go-live and continuous improvement.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio" class="alt">
+  <div class="wrap">
+    <span class="tag">Portfolio</span>
+    <h2>Our Recent Work</h2>
+    <p class="sub">A selection of projects we’ve delivered for growing businesses.</p>
+    <div class="grid">
+      <div class="card proj"><div class="thumb">🛍️</div><h3>Modern E-commerce Platform</h3><p>A high-converting online store for a fashion brand, with intuitive navigation and secure payment gateways.</p><br><a href="#contact">View Project →</a></div>
+      <div class="card proj"><div class="thumb">📊</div><h3>SaaS Application Dashboard</h3><p>A sleek, user-friendly dashboard for a B2B SaaS product, enhancing user engagement.</p><br><a href="#contact">View Project →</a></div>
+      <div class="card proj"><div class="thumb">🏢</div><h3>Corporate Information Hub</h3><p>A robust corporate website with extensive content management and a focus on lead generation.</p><br><a href="#contact">View Project →</a></div>
+    </div>
+    <p style="margin-top:28px"><a href="#contact" class="btn ghost">See More Projects</a></p>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about">
+    <div>
+      <span class="tag">About us</span>
+      <h2>About Aassheervaad</h2>
+      <p>Founded in 2024, Aassheervaad emerged from a passion for digital innovation and a commitment to helping businesses thrive online. We are a team of dedicated designers, developers and digital strategists who believe a well-crafted website can transform a company’s presence and impact.</p>
+      <p>Our mission is to deliver tailor-made web solutions that look exceptional and perform flawlessly, meeting the unique challenges and goals of each client. We pride ourselves on transparent communication, agile development and a relentless pursuit of excellence.</p>
+      <p>From initial concept to ongoing support, we partner with you every step of the way. Let’s build something amazing together!</p>
+    </div>
+    <div class="vals">
+      <div><b>Our Mission</b><small>Tailor-made web and digitisation solutions that perform.</small></div>
+      <div><b>Transparent Communication</b><small>Clear updates at every stage of your project.</small></div>
+      <div><b>Agile Delivery</b><small>Fast iterations, early demos, flexible changes.</small></div>
+      <div><b>Excellence</b><small>Quality design and engineering in everything we ship.</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="team" class="alt">
+  <div class="wrap">
+    <span class="tag">Our people</span>
+    <h2>Meet the Team</h2>
+    <p class="sub">The people who turn your digital vision into reality.</p>
+
+    <!-- EDIT: replace names, bios, emails and initials with real details -->
+    <div class="leader">
+      <div class="person">
+        <div class="avatar">CE</div>
+        <div><h3>[CEO Name]</h3><div class="role">Founder &amp; Chief Executive Officer</div>
+        <p>Leads the vision and strategy of Aassheervaad, with a passion for helping businesses go digital. Add a short bio here.</p>
+        <a class="mail" href="mailto:ceo@ashirvaad.in">ceo@ashirvaad.in</a></div>
+      </div>
+      <div class="person">
+        <div class="avatar">HR</div>
+        <div><h3>[HR Name]</h3><div class="role">Head of Human Resources</div>
+        <p>Builds our culture, hires great talent and makes sure every team member can do their best work. Add a short bio here.</p>
+        <a class="mail" href="mailto:hr@ashirvaad.in">hr@ashirvaad.in</a></div>
+      </div>
+    </div>
+
+    <div class="team">
+      <div class="person"><div class="avatar">T1</div><h3>[Team Member]</h3><div class="role">Lead Web Developer</div><p>Builds fast, secure and scalable applications.</p></div>
+      <div class="person"><div class="avatar">T2</div><h3>[Team Member]</h3><div class="role">UI/UX Designer</div><p>Designs intuitive, beautiful user experiences.</p></div>
+      <div class="person"><div class="avatar">T3</div><h3>[Team Member]</h3><div class="role">SEO &amp; Marketing Specialist</div><p>Grows visibility and drives targeted traffic.</p></div>
+      <div class="person"><div class="avatar">T4</div><h3>[Team Member]</h3><div class="role">Digital Process Analyst</div><p>Maps and automates business workflows.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap contact">
+    <div class="info">
+      <span class="tag">Contact</span>
+      <h2>Get in Touch</h2>
+      <p>Ready to start your next digital project or digitise a process? Fill out the form and our team will get back to you shortly.</p>
+      <p>🌐 <a href="https://www.ashirvaad.in" style="color:var(--brand)">www.ashirvaad.in</a></p>
+      <p>✉️ <a href="mailto:hello@ashirvaad.in" style="color:var(--brand)">hello@ashirvaad.in</a> <!-- EDIT --></p>
+    </div>
+    <!-- EDIT: replace YOUR_FORM_ID with your Formspree form ID (formspree.io) -->
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <label>Your Name<input name="name" required></label>
+      <label>Email Address<input type="email" name="email" required></label>
+      <label>I’m interested in
+        <select name="subject">
+          <option>Web Design &amp; UI/UX</option><option>Custom Web Development</option><option>E-commerce</option>
+          <option>SEO &amp; Digital Marketing</option><option>Maintenance &amp; Support</option><option>Process Digitisation</option>
+        </select>
+      </label>
+      <label>Your Message<textarea name="message" rows="4" required></textarea></label>
+      <button class="btn" type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">© <span id="yr">2026</span> Aassheervaad. All rights reserved. · Designed with ❤️ by your digital partner.</div></footer>
+
+<script>
+document.getElementById('yr').textContent=new Date().getFullYear();
+const links=document.getElementById('links');
+document.getElementById('menu').onclick=()=>links.classList.toggle('open');
+links.querySelectorAll('a').forEach(a=>a.onclick=()=>links.classList.remove('open'));
+</script>
+</body>
+</html>
