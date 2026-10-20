@@ -316,17 +316,17 @@ links.querySelectorAll('a').forEach(a=>a.onclick=()=>links.classList.remove('ope
       try { sessionStorage.setItem('aas_stats', JSON.stringify({ t: Date.now(), s: stats })); } catch (e) {}
     }
 
-    $('myCountry').textContent = '· You are visiting from ' + nameOf(code);
+   // $('myCountry').textContent = '· You are visiting from ' + nameOf(code);
 
-    const rows = Object.entries(stats).filter(e => e[1] > 0).sort((a, b) => b[1] - a[1]);
-    const shown = rows.reduce((s, e) => s + e[1], 0);
-    const others = Math.max(0, total - shown);
-    let html = rows.map(e => '<span>' + nameOf(e[0]) + ': <b>' + e[1].toLocaleString('en-IN') + '</b></span>').join('');
-    if (others > 0) html += '<span>Others: <b>' + others.toLocaleString('en-IN') + '</b></span>';
-    $('countryList').innerHTML = html;
-  } catch (e) {
-    $('visitorCount').textContent = '–';
-  }
+   // const rows = Object.entries(stats).filter(e => e[1] > 0).sort((a, b) => b[1] - a[1]);
+    // const shown = rows.reduce((s, e) => s + e[1], 0);
+    // const others = Math.max(0, total - shown);
+    // let html = rows.map(e => '<span>' + nameOf(e[0]) + ': <b>' + e[1].toLocaleString('en-IN') + '</b></span>').join('');
+    // if (others > 0) html += '<span>Others: <b>' + others.toLocaleString('en-IN') + '</b></span>';
+    // $('countryList').innerHTML = html;
+  // } catch (e) {
+    // $('visitorCount').textContent = '–';
+  // }
 })();
 </script>
 </body>
