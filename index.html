@@ -67,7 +67,7 @@ nav{display:flex;align-items:center;justify-content:space-between;height:64px}
 .contact{display:grid;gap:36px;grid-template-columns:1fr 1.2fr}
 @media(max-width:860px){.contact{grid-template-columns:1fr}}
 .info p{margin-bottom:10px;color:var(--muted)}
-form{display:grid;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px}
+{display:grid;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px}
 label{font-size:.88rem;font-weight:600}
 input,textarea,select{width:100%;padding:11px 12px;margin-top:5px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:inherit}
 input:focus,textarea:focus,select:focus{outline:2px solid var(--brand);border-color:transparent}
@@ -102,7 +102,7 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
   <div class="wrap">
     <span class="tag">Your Digital Partner</span>
     <h1>Crafting exceptional digital experiences &amp; digitising your business</h1>
-    <p>At Ashirvaad, we create stunning, functional and high-performing websites, and move your manual processes online, so you can grow faster and connect with your audience.</p>
+    <p>At Ashirvaad, we create stunning, functional and high-pering websites, and move your manual processes online, so you can grow faster and connect with your audience.</p>
     <div class="cta">
       <a href="#contact" class="btn">Get a Free Consultation</a>
       <a href="#digitise" class="btn ghost">See how we digitise</a>
@@ -227,18 +227,21 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
       <p>✉️ <a href="mailto:hello@ashirvaad.in" style="color:var(--brand)">hello@ashirvaad.in</a> <!-- EDIT --></p>
     </div>
     <!-- EDIT: replace YOUR_FORM_ID with your Formspree form ID (formspree.io) -->
-    <form action="https://formspree.io/f/xeaewdlw" method="POST">
-      <label>Your Name<input name="name" required></label>
-      <label>Email Address<input type="email" name="email" required></label>
-      <label>I’m interested in
-        <select name="subject">
-          <option>Web Design &amp; UI/UX</option><option>Custom Web Development</option><option>E-commerce</option>
-          <option>SEO &amp; Digital Marketing</option><option>Maintenance &amp; Support</option><option>Process Digitisation</option>
-        </select>
-      </label>
-      <label>Your Message<textarea name="message" rows="4" required></textarea></label>
-      <button class="btn" type="submit">Send Message</button>
-    </form>
+    <form
+  action="https://formspree.io/f/mnpjyrop"
+  method="POST"
+>
+  <label>
+    Your email:
+    <input type="email" name="email">
+  </label>
+  <label>
+    Your message:
+    <textarea name="message"></textarea>
+  </label>
+  <!-- your other form fields go here -->
+  <button type="submit">Send</button>
+</form>
   </div>
 </section>
 </main>
