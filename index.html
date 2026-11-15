@@ -254,7 +254,7 @@ $('#fl').onclick=e=>{const f=e.target.dataset.f;if(!f)return;document.querySelec
 $('#gal').onclick=e=>{const d=e.target.closest('.m');if(!d||d.classList.contains('doc'))return;const m=MEDIA.find(x=>x.id==d.dataset.id);
  $('#lbc').innerHTML=(m.kind=='video'?`<video src="${E(m.url)}" poster="${E(m.thumb)}" controls autoplay playsinline></video>`:`<img src="${E(m.url)}" alt="">`)+`<h3>${E(m.title)}</h3>`;$('#lb').classList.add('on')};
 const closeLb=()=>{$('#lb').classList.remove('on');$('#lbc').innerHTML=''};
-$('#lb').onclick=e=>{if(e.target.id=='lb'||e.target.tagName=='BUTTON')closeLb()};document.onkeydown=e=>e.key=='Escape'&&closeLb();
+$('#lb').onclick=e=>{if(e.target.id=='lb'||e.target.tagName=='BUTTON')closeLb()};addEventListener('keydown',e=>{if(e.key=='Escape')closeLb()});
 $('#menu').onclick=()=>$('#links').classList.toggle('open');$('#links').onclick=()=>$('#links').classList.remove('open');$('#yr').textContent=new Date().getFullYear();$('#ap').onclick=()=>{const a=$('#ann');a.classList.toggle('p');$('#ap').textContent=a.classList.contains('p')?'▶':'⏸'};
 (async()=>{let c=DEFAULTS;
  if(ok){try{const[r,m]=await Promise.all([sb.from('site_content').select('data').eq('id',1).maybeSingle(),sb.from('media').select('*').order('created_at',{ascending:false})]);
