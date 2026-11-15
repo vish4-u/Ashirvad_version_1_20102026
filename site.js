@@ -1,5 +1,5 @@
 // 1) Paste your Supabase values here (Project Settings → API). See README.md.
-const SB_URL = 'https://kahapxfozlmzraevmjgv.supabase.co/rest/v1/';
+const SB_URL = 'https://kahapxfozlmzraevmjgv.supabase.co/rest/v1';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthaGFweGZvemxtenJhZXZtamd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ3Mzc2MDcsImV4cCI6MjExMDMxMzYwN30.zyS5bFU5aZBuKfAkntspjoboFx0bz0Dw5luKJ-PEokg';
 
 // Default content shown until you save changes from the admin panel.
