@@ -90,21 +90,7 @@ footer h4{color:var(--t);margin-bottom:12px;font-size:1rem}footer a{display:bloc
 <div id="custom"></div>
 <section id="faq" class="alt"><div class="w"><span class="tag">FAQ</span><h2>Frequently asked questions</h2><p class="sub">Quick answers to common questions.</p><div id="fq-g"></div></div></section>
 <section id="contact"><div class="w contact"><div class="info"><span class="tag">Contact</span><h2>Get in Touch</h2><p>Ready to start your next project? Send us a message and we'll reply shortly.</p><div id="c-info"></div><div class="wq" id="wqb"><h3>💬 Send your query on WhatsApp</h3><input id="wn" placeholder="Your name"><textarea id="wm" rows="3" placeholder="Type your question…"></textarea><button type="button" class="btn" id="wsend">Send on WhatsApp</button></div></div>
-<form
-  action="https://formspree.io/f/mnpjyrop"
-  method="POST"
->
-  <label>
-    Your email:
-    <input type="email" name="email">
-  </label>
-  <label>
-    Your message:
-    <textarea name="message"></textarea>
-  </label>
-  <!-- your other form fields go here -->
-  <button type="submit">Send</button>
-</form>
+<form id="mnpjyrop" method="POST"><label>Your name<input name="name" required></label><label>Your email<input type="email" name="email" required></label><label>Your message<textarea name="message" rows="4" required></textarea></label><button class="btn" type="submit">Send message</button></form></div></section>
 </div></section>
 </main>
 <footer><div class="w"><div class="fg"><div><a class="logo" href="#home" id="fl-b"></a><p id="f-about"></p><div class="soc" id="soc"></div></div><div><h4>Quick links</h4><div id="f-q"></div></div><div><h4>Services</h4><div id="f-s"></div></div><div><h4>Contact</h4><div id="f-c"></div></div></div>
