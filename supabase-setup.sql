@@ -2,7 +2,7 @@
 create table if not exists site_content(id int primary key, data jsonb not null);
 create table if not exists media(
   id uuid primary key default gen_random_uuid(),
-  kind text check (kind in ('image','video')),
+  kind text check (kind in ('image','video','document')),
   title text, descr text, url text not null, thumb text,
   created_at timestamptz default now());
 alter table site_content enable row level security;
