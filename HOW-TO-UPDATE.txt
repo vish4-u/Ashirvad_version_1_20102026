@@ -1,0 +1,18 @@
+HOW TO UPDATE (about 5 minutes)
+
+1. SUPABASE (once): open your project -> SQL Editor -> New query -> paste everything from supabase-form.sql -> Run.
+   (You do NOT need to run the other .sql files again.)
+
+2. GITHUB: open your repository -> Add file -> Upload files -> drag in these 3 files, replacing the old ones:
+      index.html   admin.html   site.js
+   -> Commit changes. Your Supabase URL and key are already inside site.js
+   (I also removed the extra "/rest/v1" from the URL, which is the wrong format).
+
+3. Wait 1-3 minutes, open www.ashirvaad.in/admin.html (press Ctrl+Shift+R), log in.
+
+4. Build your form: Website content -> "Enquiry form - fields". Add / edit / remove / reorder fields,
+   then press "Save all changes". Visitors fill it in the Contact section;
+   read the answers in the "Form enquiries" tab.
+
+Note: your old Formspree form in the contact section is replaced by this new form
+(answers now go to Supabase, not Formspree).

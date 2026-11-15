@@ -47,7 +47,7 @@ nav{position:relative;display:flex;align-items:center;justify-content:space-betw
 .role{color:var(--b);font-weight:600;font-size:.88rem;margin-bottom:6px}.person p{color:var(--m);font-size:.92rem}.person a.s{display:inline-block;margin:8px 6px 0;color:var(--b);font-size:.88rem}
 .contact{display:grid;gap:40px;grid-template-columns:1fr 1.2fr}.info p{margin-bottom:10px;color:var(--m)}.info a{color:var(--b)}
 form{display:grid;gap:14px;background:var(--s);border:1px solid var(--l);border-radius:var(--r);padding:26px}
-label{font-size:.88rem;font-weight:600}input,textarea{width:100%;padding:12px;margin-top:5px;border-radius:10px;border:1px solid var(--l);background:var(--bg);color:var(--t);font:inherit}input:focus,textarea:focus{outline:2px solid var(--b)}
+label{font-size:.88rem;font-weight:600}input,textarea,select{width:100%;padding:12px;margin-top:5px;border-radius:10px;border:1px solid var(--l);background:var(--bg);color:var(--t);font:inherit}input:focus,textarea:focus{outline:2px solid var(--b)}
 footer{border-top:1px solid var(--l);padding:48px 0 24px;color:var(--m);font-size:.92rem}h1,h2,h3{font-family:var(--hf);color:var(--h)}.logo{font-family:var(--hf);line-height:1.15;max-width:240px;font-size:1.1rem}
 .rev{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}.q{background:var(--s);border:1px solid var(--l);border-radius:var(--r);padding:26px}
 .q .st{color:var(--b);letter-spacing:3px;margin-bottom:10px}.q p{font-style:italic;margin-bottom:16px}.q .au{display:flex;gap:12px;align-items:center}
@@ -90,25 +90,7 @@ footer h4{color:var(--t);margin-bottom:12px;font-size:1rem}footer a{display:bloc
 <div id="custom"></div>
 <section id="faq" class="alt"><div class="w"><span class="tag">FAQ</span><h2>Frequently asked questions</h2><p class="sub">Quick answers to common questions.</p><div id="fq-g"></div></div></section>
 <section id="contact"><div class="w contact"><div class="info"><span class="tag">Contact</span><h2>Get in Touch</h2><p>Ready to start your next project? Send us a message and we'll reply shortly.</p><div id="c-info"></div><div class="wq" id="wqb"><h3>💬 Send your query on WhatsApp</h3><input id="wn" placeholder="Your name"><textarea id="wm" rows="3" placeholder="Type your question…"></textarea><button type="button" class="btn" id="wsend">Send on WhatsApp</button></div></div>
-<form
-  action="https://formspree.io/f/xeaewdlw"
-  method="POST"
-  enctype="multipart/form-data"
->
-  <label>
-    Your name:
-    <input type="name" name="name">
-  </label>
-  <label>
-    Your email:
-    <input type="email" name="email">
-  </label>
-  <label>
-    Your file:
-    <input type="file" name="upload">
-  </label>
-  <button type="submit">Send</button>
-</form>
+<form id="cf"></form>
 </div></section>
 </main>
 <footer><div class="w"><div class="fg"><div><a class="logo" href="#home" id="fl-b"></a><p id="f-about"></p><div class="soc" id="soc"></div></div><div><h4>Quick links</h4><div id="f-q"></div></div><div><h4>Services</h4><div id="f-s"></div></div><div><h4>Contact</h4><div id="f-c"></div></div></div>
@@ -223,7 +205,7 @@ function render(c){
  const k=c.contact;$('#c-info').innerHTML=(k.email?`<p>✉️ <a href="mailto:${E(k.email)}">${E(k.email)}</a></p>`:'')+(k.phone?`<p>📞 <a href="tel:${E(k.phone)}">${E(k.phone)}</a></p>`:'')+(k.address?`<p>📍 ${E(k.address)}</p>`:'');
  applyTheme(c.theme);wa(c);const rv=c.testimonials||[];$('#reviews').style.display=$('#nrev').style.display=rv.length?'':'none';
  $('#rev-g').innerHTML=L(rv,x=>`<div class="q rv"><div class="st">${'★'.repeat(Math.min(5,+x.rating||5))}</div><p>“${E(x.text)}”</p><div class="au">${x.photo?`<img src="${E(x.photo)}" alt="">`:`<i>${E((x.name||'?')[0])}</i>`}<div><b>${E(x.name)}</b><small>${E(x.role)}</small></div></div></div>`);
- $('#cf').action='https://formspree.io/f/'+k.formspree;
+ buildForm(c);
  const of=(c.offers||[]).filter(x=>x.text),A=$('#ann');
  if(c.announce&&c.announce.on=='yes'&&of.length){const a=Array(4).fill(of).flat(),t=a.map(x=>`<a href="${E(x.link||'#contact')}">${E(x.text)}</a>`).join('');$('#atr').innerHTML=t+t;$('#atr').style.setProperty('--sp',(+c.announce.speed||8)*a.length);A.style.display='block'}else A.style.display='none';
  const pl=c.pricing||[],pm=c.pricingmeta||{};$('#pr-s').textContent=pm.sub||'';$('#pr-n').textContent=pm.note||'';
@@ -240,6 +222,22 @@ function render(c){
  $('#f-l').innerHTML=L(c.flinks,x=>`· <a href="${E(x.url)}" target="_blank" rel="noopener">${E(x.label)}</a>`);
  reveal();
 }
+let CF={};
+function buildForm(c){const f=c.form||{},fs=c.formfields||[];CF={...f,fields:fs};
+ const inp=(x,i)=>{const t=x.type||'text',r=x.req=='yes'?' required':'',n=` name="f${i}"`;
+  if(t=='textarea')return`<textarea${n} rows="4"${r}></textarea>`;
+  if(t=='select')return`<select${n}${r}><option value="">Select…</option>${(x.opts||'').split(',').map(o=>o.trim()).filter(Boolean).map(o=>`<option>${E(o)}</option>`).join('')}</select>`;
+  return`<input type="${t}"${n}${r}>`};
+ $('#cf').innerHTML=`<h3>${E(f.title||'Send us a message')}</h3>`+fs.map((x,i)=>`<label>${E(x.label)}${x.req=='yes'?' *':''}${inp(x,i)}</label>`).join('')+`<input name="hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px"><button class="btn" type="submit">${E(f.btn||'Send message')}</button><p id="fm" class="pn"></p>`}
+$('#cf').onsubmit=async e=>{e.preventDefault();const fm=e.target,fs=CF.fields||[],b=fm.querySelector('button'),m=$('#fm');if(fm.hp.value)return;
+ if(!ok){m.textContent='The form is not connected yet.';return}
+ b.disabled=true;m.textContent='Sending…';
+ try{const data={};for(let i=0;i<fs.length;i++){const x=fs[i],el=fm['f'+i];let v=el.value;
+   if(x.type=='file'){const f=el.files[0];if(f){if(f.size>10485760)throw Error('File too large (max 10 MB)');const p=crypto.randomUUID()+'/'+f.name.replace(/[^\w.-]/g,'_'),r=await sb.storage.from('submissions').upload(p,f);if(r.error)throw r.error;v={name:f.name,path:p}}else v=''}
+   data[x.label]=v}
+  const r=await sb.from('form_submissions').insert({data});if(r.error)throw r.error;fm.reset();m.textContent=CF.success||'Thank you! We will contact you shortly.'}
+ catch(err){m.textContent=(err.message||'').includes('too large')?err.message:'Sorry, something went wrong. Please try again.'}
+ b.disabled=false};
 function wa(c){const n=(c.contact.whatsapp||'').replace(/\D/g,''),f=$('#wf'),q=$('#wqb');
  if(!n){f.style.display='none';q.style.display='none';return}
  const u=t=>`https://wa.me/${n}?text=${encodeURIComponent(t)}`;f.href=u(c.contact.wamsg||'Hello! I would like to know more about your services.');f.style.display='grid';q.style.display='block';

@@ -1,5 +1,5 @@
 // 1) Paste your Supabase values here (Project Settings → API). See README.md.
-let SB_URL = 'https://kahapxfozlmzraevmjgv.supabase.co/rest/v1';
+let SB_URL = 'https://kahapxfozlmzraevmjgv.supabase.co';
 let SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthaGFweGZvemxtenJhZXZtamd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ3Mzc2MDcsImV4cCI6MjExMDMxMzYwN30.zyS5bFU5aZBuKfAkntspjoboFx0bz0Dw5luKJ-PEokg';
 
 // Ready-made themes (editable later from Admin -> Theme & design)
@@ -24,6 +24,13 @@ function applyTheme(t) {
 const DEFAULTS = {
   theme: { preset: 'linkedin', ...THEMES.linkedin },
   testimonials: [],
+  form: { title: 'Send us a message', btn: 'Send message', success: 'Thank you! We will contact you shortly.' },
+  formfields: [
+    { label: 'Your name', type: 'text', req: 'yes', opts: '' },
+    { label: 'Email', type: 'email', req: 'yes', opts: '' },
+    { label: 'Phone number', type: 'tel', req: 'no', opts: '' },
+    { label: 'Your message', type: 'textarea', req: 'yes', opts: '' }
+  ],
   announce: { on: 'no', speed: '8' },
   offers: [
     { text: '🎉 Limited offer: 40% OFF on website packages!', link: '#pricing' },

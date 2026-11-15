@@ -33,3 +33,6 @@ Files: `index.html` (public site), `admin.html` (admin panel at /admin.html), `s
 
 ## Theme
 Default theme is now **LinkedIn Blue** (light grey page, white cards, blue accents). If you saved a different theme before, go to Admin -> Theme & design -> click **LinkedIn Blue** -> Save all changes.
+
+## Enquiry form
+Run `supabase-form.sql` once. Admin -> Website content -> Enquiry form: add, edit, remove, reorder fields (text, email, phone, number, date, long text, dropdown, file upload). Submissions: Admin -> Form enquiries (view, mark done, delete, export CSV, open attached files). Attached files are private (10 MB each).

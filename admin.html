@@ -32,7 +32,9 @@ const SCHEMA=[['brand','Business name',{name:'Name'}],
 ['values','About – highlights',[{t:'Title',d:'Description'}]],
 ['testimonials','Testimonials / Reviews',[{name:'Client name',role:'Role / company',text:T+'Review text',rating:'Rating (1-5)',photo:'Photo'}]],
 ['team','Team members',[{name:'Name',role:'Role',bio:T+'Bio',email:'Email',linkedin:'LinkedIn URL',photo:'Photo'}]],
-['contact','Contact details',{email:'Email',phone:'Phone',whatsapp:'WhatsApp number (with country code, e.g. 919876543210)',address:'Address',formspree:'Formspree form ID',wamsg:'Default WhatsApp message (optional)'}],
+['contact','Contact details',{email:'Email',phone:'Phone',whatsapp:'WhatsApp number (with country code, e.g. 919876543210)',address:'Address',wamsg:'Default WhatsApp message (optional)'}],
+['form','📋 Enquiry form – heading & button',{title:'Form heading',btn:'Submit button text',success:T+'Message shown after sending'}],
+['formfields','📋 Enquiry form – fields (add / edit / remove / reorder)',[{label:'Field label (e.g. Phone number, City)',type:'s:Field type|text=Short text,email=Email,tel=Phone number,number=Number,date=Date,textarea=Long text,select=Dropdown list,file=File upload',req:'s:Required?|no=No,yes=Yes',opts:'Dropdown options, comma separated (only for Dropdown type)'}]],
 ['offers','🔔 Live offer banner – messages',[{text:'Message (e.g. 🎉 40% OFF on all websites!)',link:'Link when clicked (optional, e.g. #pricing)'}]],
 ['announce','🔔 Live offer banner – show / speed',{on:'s:Show the moving offer banner?|no=No – hide it,yes=Yes – show it',speed:'s:Scroll speed|12=Slow,8=Medium,4=Fast'}],
 ['pricingmeta','💰 Pricing – section text',{sub:'Sub-heading under "Pricing"',note:'Note under the plans (e.g. GST extra)'}],
@@ -50,8 +52,8 @@ function login(){$('#app').innerHTML=`<div class="card" style="max-width:380px;m
 async function start(){const{data:{session}}=await sb.auth.getSession();if(!session)return login();
  const r=await sb.from('site_content').select('data').eq('id',1).maybeSingle();D={...structuredClone(DEFAULTS),...(r.data?.data||{})};shell()}
 function shell(){$('#app').innerHTML=`<header><h1>⚙️ Website admin</h1><div><a href="index.html" target="_blank">View site ↗</a> &nbsp; <button class="g" id="lo">Log out</button></div></header>
-<div class="tabs"><button data-t="media" class="${tab=='media'?'on':''}">🎬 Videos, Images & Documents</button><button data-t="content" class="${tab=='content'?'on':''}">📝 Website content</button><button data-t="theme" class="${tab=='theme'?'on':''}">🎨 Theme & design</button></div><div id="pane"></div>`;
- $('#lo').onclick=async()=>{await sb.auth.signOut();login()};document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;contentTab.o=null;shell()});tab=='media'?mediaTab():contentTab()}
+<div class="tabs"><button data-t="media" class="${tab=='media'?'on':''}">🎬 Videos, Images & Documents</button><button data-t="content" class="${tab=='content'?'on':''}">📝 Website content</button><button data-t="inbox" class="${tab=='inbox'?'on':''}">📥 Form enquiries</button><button data-t="theme" class="${tab=='theme'?'on':''}">🎨 Theme & design</button></div><div id="pane"></div>`;
+ $('#lo').onclick=async()=>{await sb.auth.signOut();login()};document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;contentTab.o=null;shell()});tab=='media'?mediaTab():tab=='inbox'?inboxTab():contentTab()}
 const presets=()=>'<div class="card"><h2>Ready-made themes</h2>'+Object.entries(THEMES).map(([k,v])=>`<button class="g" data-th="${k}" style="margin:0 8px 8px 0;border-color:${v.b}">${v.name}</button>`).join('')+'<br><small>Pick one, fine-tune the colours below, then press Save.</small></div>';
 // ---------- MEDIA ----------
 function grab(v){const c=document.createElement('canvas'),w=Math.min(v.videoWidth,960);c.width=w;c.height=w*v.videoHeight/v.videoWidth;c.getContext('2d').drawImage(v,0,0,c.width,c.height);return new Promise(r=>c.toBlob(r,'image/jpeg',.82))}
@@ -85,6 +87,17 @@ async function listMedia(){const{data}=await sb.from('media').select('*').order(
  $('#ml').onclick=async e=>{const d=e.target.dataset,m=data.find(x=>x.id==(d.id||d.ed));if(!m)return;
   if(d.ed){const t=prompt('Title',m.title);if(t===null)return;const s=prompt('Description (optional)',m.descr||'');if(s===null)return;await sb.from('media').update({title:t.trim()||m.title,descr:s.trim()}).eq('id',m.id);msg('Saved');return listMedia()}
   if(d.id&&confirm('Delete this permanently?')){const ps=[m.url,m.thumb].filter(Boolean).map(u=>decodeURIComponent(u.split('/media/')[1]));await B().remove(ps);await sb.from('media').delete().eq('id',m.id);msg('Deleted');listMedia()}}}
+async function inboxTab(){$('#pane').innerHTML='<div class="card"><h2>📥 Form enquiries</h2><p><button class="g" id="csv">⬇ Export all as CSV</button></p></div><div id="inb">Loading…</div>';
+ const{data,error}=await sb.from('form_submissions').select('*').order('created_at',{ascending:false});
+ if(error){$('#inb').innerHTML='<div class="card">Could not load enquiries: '+E(error.message)+'<br><small>Run supabase-form.sql in Supabase first.</small></div>';return}
+ $('#inb').innerHTML=data.length?data.map(x=>`<div class="card"><small>${new Date(x.created_at).toLocaleString()} · ${x.status=='done'?'✅ done':'🆕 new'}</small>${Object.entries(x.data).map(([k,v])=>`<p style="margin-top:6px"><b>${E(k)}:</b> ${v&&v.path?`<a href="#" data-f="${E(v.path)}">📎 ${E(v.name)}</a>`:E(v)}</p>`).join('')}<p style="margin-top:12px;display:flex;gap:8px"><button class="g" data-st="${x.id}">${x.status=='done'?'Mark as new':'Mark as done'}</button><button class="d" data-dl="${x.id}">Delete</button></p></div>`).join(''):'<div class="card"><small>No enquiries yet.</small></div>';
+ $('#csv').onclick=()=>{const ks=[...new Set(data.flatMap(x=>Object.keys(x.data)))],q=v=>'"'+String((v&&v.name)||(v??'')).replace(/"/g,'""')+'"',rows=[['Date','Status',...ks].map(q).join(',')].concat(data.map(x=>[new Date(x.created_at).toLocaleString(),x.status,...ks.map(k=>x.data[k])].map(q).join(',')));
+  const l=document.createElement('a');l.href=URL.createObjectURL(new Blob(['\ufeff'+rows.join('\n')],{type:'text/csv'}));l.download='enquiries.csv';l.click()};
+ $('#inb').onclick=async e=>{const d=e.target.dataset;
+  if(d.f){e.preventDefault();const w=window.open('','_blank'),r=await sb.storage.from('submissions').createSignedUrl(d.f,600);if(r.error){w.close();return msg(r.error.message)}w.location=r.data.signedUrl;return}
+  const x=data.find(y=>y.id==(d.st||d.dl));if(!x)return;
+  if(d.st){await sb.from('form_submissions').update({status:x.status=='done'?'new':'done'}).eq('id',x.id);inboxTab()}
+  if(d.dl&&confirm('Delete this enquiry permanently?')){const ps=Object.values(x.data).filter(v=>v&&v.path).map(v=>v.path);if(ps.length)await sb.storage.from('submissions').remove(ps);await sb.from('form_submissions').delete().eq('id',x.id);msg('Deleted');inboxTab()}}}
 // ---------- CONTENT ----------
 const gp=p=>p.split('.').reduce((o,k)=>o?.[k],D);
 function setp(p,v){const a=p.split('.'),l=a.pop();a.reduce((o,k)=>o[k],D)[l]=v}
@@ -93,12 +106,13 @@ function field(p,k,lab,v){if(k=='photo'||k=='image')return`<label>${lab}<input t
  if(lab.startsWith('s:')){const[x,o]=lab.slice(2).split('|');return`<label>${x}<select data-p="${p}">${o.split(',').map(z=>{const[q,n]=z.split('=');return`<option value="${q}"${q==v?' selected':''}>${n}</option>`}).join('')}</select></label>`}
  return lab[0]==T?`<label>${lab.slice(1)}<textarea rows="3" data-p="${p}">${E(v)}</textarea></label>`:`<label>${lab}<input data-p="${p}" value="${E(v)}"></label>`}
 function contentTab(){const S=SCHEMA.filter(s=>(s[0]=='theme')==(tab=='theme'));$('#pane').innerHTML=(tab=='theme'?presets():'')+S.map(([k,t,f])=>`<details><summary>${t}</summary><div class="in">`+(Array.isArray(f)?
-  D[k].map((it,i)=>`<div class="sub">${Object.entries(f[0]).map(([fk,l])=>field(`${k}.${i}.${fk}`,fk,l,it[fk])).join('')}<p style="margin-top:10px"><button class="d" data-del="${k}.${i}">Remove</button></p></div>`).join('')+`<button class="g" data-add="${k}">+ Add</button>`:
+  D[k].map((it,i)=>`<div class="sub">${Object.entries(f[0]).map(([fk,l])=>field(`${k}.${i}.${fk}`,fk,l,it[fk])).join('')}<p style="margin-top:10px;display:flex;gap:6px"><button class="g" data-mv="${k}.${i}.-1" title="Move up">↑</button><button class="g" data-mv="${k}.${i}.1" title="Move down">↓</button><button class="d" data-del="${k}.${i}">Remove</button></p></div>`).join('')+`<button class="g" data-add="${k}">+ Add</button>`:
   Object.entries(f).map(([fk,l])=>field(`${k}.${fk}`,fk,l,D[k][fk])).join(''))+`</div></details>`).join('')+`<p><button id="sv">💾 Save all changes</button></p>`;
  const open=contentTab.o||[];if(tab=='theme')open[0]=true;document.querySelectorAll('details').forEach((d,i)=>{d.open=open[i];d.ontoggle=()=>{contentTab.o=[...document.querySelectorAll('details')].map(x=>x.open)}});
  $('#pane').oninput=e=>{if(e.target.dataset.p)setp(e.target.dataset.p,e.target.value)};
  $('#pane').onchange=async e=>{const p=e.target.dataset.up,f=e.target.files?.[0];if(!p||!f)return;msg('Uploading photo…');const n=`photos/${Date.now()}-${f.name.replace(/[^\w.-]/g,'_')}`,r=await B().upload(n,f);if(r.error)return msg(r.error.message);setp(p,B().getPublicUrl(n).data.publicUrl);contentTab()};
  $('#pane').onclick=e=>{const d=e.target.dataset;if(d.th){D.theme={...THEMES[d.th],preset:d.th};contentTab();return}
+  if(d.mv){const[q,i,dl]=d.mv.split('.'),arr=D[q],j=+i+ +dl;if(j>=0&&j<arr.length){[arr[i],arr[j]]=[arr[j],arr[i]];contentTab()}return}
   if(d.del){const a=d.del.split('.');D[a[0]].splice(+a[1],1);contentTab()}
   if(d.add){const f=SCHEMA.find(s=>s[0]==d.add)[2][0];D[d.add].push(Object.fromEntries(Object.keys(f).map(x=>[x,''])));contentTab.o=null;contentTab();const ds=document.querySelectorAll('details');ds[S.findIndex(s=>s[0]==d.add)].open=true}}
  $('#sv').onclick=async()=>{const r=await sb.from('site_content').upsert({id:1,data:D});msg(r.error?'Error: '+r.error.message:'✅ Saved – website updated')}}
