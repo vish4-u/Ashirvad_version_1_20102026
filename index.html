@@ -1,275 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ashirvaad – Your Digital Partner</title>
 <meta name="description" content="Ashirvaad designs, builds and digitises: websites, e-commerce, SEO and process automation that help businesses grow.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
 <style>
-:root{--bg:#f7fafc;--surface:#fff;--text:#0f172a;--muted:#475569;--brand:#0284c7;--brand2:#0ea5a4;--line:#e2e8f0;--soft:#e0f2fe}
-@media (prefers-color-scheme:dark){:root{--bg:#0b1220;--surface:#111b2e;--text:#e5edf7;--muted:#9fb0c6;--brand:#38bdf8;--brand2:#2dd4bf;--line:#1f2d45;--soft:#0f2a44}}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:72px}
-body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-a{color:inherit;text-decoration:none}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-section{padding:72px 0}
-h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:8px}
-.sub{color:var(--muted);max-width:640px;margin-bottom:36px}
-.tag{display:inline-block;color:var(--brand);font-weight:600;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
-.btn{display:inline-block;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;padding:12px 24px;border-radius:10px;font-weight:600;border:0;cursor:pointer;font-size:1rem}
-.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
-header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-nav{display:flex;align-items:center;justify-content:space-between;height:64px}
-.logo{font-weight:800;font-size:1.25rem;background:linear-gradient(135deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.links{display:flex;gap:22px;align-items:center;font-size:.95rem}
-.links a:hover{color:var(--brand)}
-#menu{display:none;background:none;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:6px 10px;font-size:1.1rem}
-@media(max-width:860px){#menu{display:block}.links{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--surface);padding:16px;border-bottom:1px solid var(--line)}.links.open{display:flex}}
-.hero{padding:96px 0 72px;background:radial-gradient(ellipse at top right,var(--soft),transparent 60%)}
-.hero h1{font-size:clamp(2.1rem,5vw,3.6rem);line-height:1.1;max-width:780px;margin-bottom:18px}
-.hero p{color:var(--muted);max-width:600px;font-size:1.1rem;margin-bottom:28px}
-.hero .cta{display:flex;gap:12px;flex-wrap:wrap}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:48px}
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
-.stat b{font-size:1.8rem;color:var(--brand);display:block}
-.stat span{color:var(--muted);font-size:.9rem}
-.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;transition:.2s}
-.card:hover{transform:translateY(-4px);border-color:var(--brand)}
-.ico{font-size:1.8rem;width:52px;height:52px;display:grid;place-items:center;background:var(--soft);border-radius:12px;margin-bottom:14px}
-.card h3{margin-bottom:6px;font-size:1.1rem}
-.card p,.card li{color:var(--muted);font-size:.95rem}
-.card ul{margin:10px 0 0 18px}
-.alt{background:var(--surface);border-block:1px solid var(--line)}
-.steps{counter-reset:s;display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
-.step{counter-increment:s;position:relative;padding:22px;border-radius:14px;background:var(--bg);border:1px solid var(--line)}
-.step::before{content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--brand);color:#fff;font-weight:700;margin-bottom:10px}
-.step p{color:var(--muted);font-size:.92rem}
-.proj .thumb{height:150px;border-radius:12px;margin-bottom:14px;display:grid;place-items:center;font-size:2.6rem;background:linear-gradient(135deg,var(--soft),var(--surface));border:1px solid var(--line)}
-.proj a{color:var(--brand);font-weight:600}
-.about{display:grid;gap:40px;grid-template-columns:1.2fr 1fr;align-items:center}
-@media(max-width:860px){.about{grid-template-columns:1fr}}
-.about p{color:var(--muted);margin-bottom:14px}
-.vals{display:grid;gap:12px}
-.vals div{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--brand);border-radius:10px;padding:14px 16px}
-.vals small{color:var(--muted);display:block}
-.leader{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-bottom:28px}
-.person{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;text-align:center}
-.leader .person{display:flex;gap:18px;text-align:left;align-items:flex-start}
-.avatar{flex:none;width:84px;height:84px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.6rem;background:linear-gradient(135deg,var(--brand),var(--brand2));margin:0 auto 12px}
-.leader .avatar{margin:0}
-.role{color:var(--brand);font-weight:600;font-size:.88rem;margin-bottom:6px}
-.person p{color:var(--muted);font-size:.92rem}
-.person .mail{display:inline-block;margin-top:8px;color:var(--brand);font-size:.88rem}
-.team{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-.contact{display:grid;gap:36px;grid-template-columns:1fr 1.2fr}
-@media(max-width:860px){.contact{grid-template-columns:1fr}}
-.info p{margin-bottom:10px;color:var(--muted)}
-{display:grid;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px}
-label{font-size:.88rem;font-weight:600}
-input,textarea,select{width:100%;padding:11px 12px;margin-top:5px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:inherit}
-input:focus,textarea:focus,select:focus{outline:2px solid var(--brand);border-color:transparent}
-.linkedin{display:inline-flex;align-items:center;gap:6px;margin:2px 0 8px;padding:4px 12px;border-radius:20px;background:#0a66c2;color:#fff;font-size:.82rem;font-weight:600}
-.linkedin:hover{opacity:.85}
-.visitors{display:inline-block;margin-bottom:10px;padding:6px 16px;border-radius:20px;background:var(--soft);color:var(--text);font-size:.9rem}
-.visitors b{color:var(--brand);font-size:1.05rem}
-footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:.9rem;text-align:center}
-</style>
-</head>
-<body>
-
-<header>
-  <div class="wrap">
-    <nav>
-      <a href="#home" class="logo">Ashirvaad</a>
-      <button id="menu" aria-label="Toggle menu">☰</button>
-      <div class="links" id="links">
-        <a href="#services">Services</a>
-        <a href="#digitise">Digitisation</a>
-        <a href="#portfolio">Portfolio</a>
-        <a href="#about">About</a>
-        <a href="#team">Team</a>
-        <a href="#contact" class="btn" style="padding:8px 18px">Free Consultation</a>
-      </div>
-    </nav>
-  </div>
-</header>
-
+:root{--bg:#050b18;--s:#0d1730;--t:#eaf2ff;--m:#9db0cc;--b:#38bdf8;--b2:#2dd4bf;--l:#1e2e4d;--g:linear-gradient(135deg,#38bdf8,#2dd4bf)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--t);line-height:1.6}
+a{color:inherit;text-decoration:none}.w{max-width:1160px;margin:0 auto;padding:0 20px}section{padding:84px 0}
+h2{font-size:clamp(1.7rem,3.2vw,2.4rem);line-height:1.15;margin-bottom:10px}.sub{color:var(--m);max-width:620px;margin-bottom:40px}
+.tag{display:inline-block;color:var(--b);font-weight:700;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.btn{display:inline-block;background:var(--g);color:#04121f;padding:13px 26px;border-radius:12px;font-weight:700;border:0;cursor:pointer;font-size:1rem;transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px #38bdf855}.btn.o{background:none;color:var(--t);border:1px solid var(--l)}
+header{position:sticky;top:0;z-index:20;background:#050b18cc;backdrop-filter:blur(12px);border-bottom:1px solid var(--l)}
+nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo{font-weight:800;font-size:1.3rem;background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}
+.links{display:flex;gap:24px;align-items:center;font-size:.95rem;color:var(--m)}.links a:hover{color:var(--b)}.links .btn{color:#04121f;padding:9px 18px}
+#menu{display:none;background:none;border:1px solid var(--l);color:var(--t);border-radius:8px;padding:6px 11px;font-size:1.1rem}
+@media(max-width:880px){#menu{display:block}.links{display:none;position:absolute;top:66px;left:0;right:0;flex-direction:column;background:var(--s);padding:18px}.links.open{display:flex}}
+.hero{padding:110px 0 80px;position:relative;overflow:hidden}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;filter:blur(90px);opacity:.35;z-index:-1}
+.hero:before{width:420px;height:420px;background:#0284c7;top:-120px;right:-80px}.hero:after{width:340px;height:340px;background:#0ea5a4;bottom:-120px;left:-60px}
+.hero h1{font-size:clamp(2.3rem,5.6vw,4rem);line-height:1.08;max-width:820px;margin-bottom:20px}
+.hero p{color:var(--m);max-width:620px;font-size:1.12rem;margin-bottom:30px}.cta{display:flex;gap:12px;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-top:56px}
+.stat,.card,.person,.v{background:var(--s);border:1px solid var(--l);border-radius:18px}
+.stat{padding:20px}.stat b{font-size:1.8rem;display:block;background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}.stat span{color:var(--m);font-size:.9rem}
+.alt{background:#08122a}.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{padding:26px;transition:.25s}.card:hover{transform:translateY(-5px);border-color:var(--b)}
+.ico{font-size:1.7rem;width:54px;height:54px;display:grid;place-items:center;background:#38bdf81f;border-radius:14px;margin-bottom:14px}
+.card h3{margin-bottom:6px;font-size:1.1rem}.card p{color:var(--m);font-size:.95rem}
+.steps{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin-top:36px;counter-reset:s}
+.step{counter-increment:s;padding:22px;border-radius:16px;border:1px dashed var(--l)}.step:before{content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--g);color:#04121f;font-weight:800;margin-bottom:10px}.step p{color:var(--m);font-size:.92rem}
+.fl{display:flex;gap:10px;margin-bottom:24px}.fl button{background:none;border:1px solid var(--l);color:var(--m);padding:8px 18px;border-radius:20px;cursor:pointer;font:inherit}.fl button.on{background:var(--g);color:#04121f;border-color:transparent;font-weight:700}
+.gal{display:grid;gap:20px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.m{background:var(--s);border:1px solid var(--l);border-radius:18px;overflow:hidden;cursor:pointer;transition:.25s}.m:hover{transform:translateY(-5px);border-color:var(--b)}
+.th{position:relative;aspect-ratio:16/9;background:#000 center/cover}.th img{width:100%;height:100%;object-fit:cover;display:block}
+.play{position:absolute;inset:0;display:grid;place-items:center;background:#0000004d}.play i{width:62px;height:62px;border-radius:50%;background:#ffffffe6;display:grid;place-items:center;font-style:normal;color:#04121f;font-size:1.4rem;padding-left:4px}
+.m div.tx{padding:16px}.m h3{font-size:1.05rem}.m p{color:var(--m);font-size:.9rem;margin-top:4px}.empty{color:var(--m)}
+#lb{position:fixed;inset:0;background:#000d;z-index:50;display:none;place-items:center;padding:20px}#lb.on{display:grid}
+#lb video,#lb img{max-width:min(1000px,94vw);max-height:80vh;border-radius:12px;background:#000}#lb h3{margin-top:12px;text-align:center}#lb button{position:absolute;top:16px;right:20px;background:none;border:0;color:#fff;font-size:2rem;cursor:pointer}
+.about{display:grid;gap:44px;grid-template-columns:1.2fr 1fr;align-items:center}@media(max-width:880px){.about,.contact{grid-template-columns:1fr!important}}
+.about p{color:var(--m);margin-bottom:14px}.vals{display:grid;gap:12px}.v{border-left:4px solid var(--b);padding:14px 16px}.v small{color:var(--m);display:block}
+.team{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}.person{padding:26px;text-align:center}
+.av{width:104px;height:104px;border-radius:50%;margin:0 auto 14px;display:grid;place-items:center;background:var(--g);color:#04121f;font-weight:800;font-size:1.8rem;object-fit:cover}
+.role{color:var(--b);font-weight:600;font-size:.88rem;margin-bottom:6px}.person p{color:var(--m);font-size:.92rem}.person a.s{display:inline-block;margin:8px 6px 0;color:var(--b);font-size:.88rem}
+.contact{display:grid;gap:40px;grid-template-columns:1fr 1.2fr}.info p{margin-bottom:10px;color:var(--m)}.info a{color:var(--b)}
+form{display:grid;gap:14px;background:var(--s);border:1px solid var(--l);border-radius:18px;padding:26px}
+label{font-size:.88rem;font-weight:600}input,textarea{width:100%;padding:12px;margin-top:5px;border-radius:10px;border:1px solid var(--l);background:var(--bg);color:var(--t);font:inherit}input:focus,textarea:focus{outline:2px solid var(--b)}
+footer{border-top:1px solid var(--l);padding:30px 0;color:var(--m);font-size:.9rem;text-align:center}.vis b{color:var(--b)}
+.rv{opacity:0;transform:translateY(22px);transition:.6s}.rv.in{opacity:1;transform:none}
+</style></head><body>
+<header><div class="w"><nav><a href="#home" class="logo" id="brand">Ashirvaad</a><button id="menu" aria-label="Menu">☰</button>
+<div class="links" id="links"><a href="#services">Services</a><a href="#digitise">Digitisation</a><a href="#work">Our Work</a><a href="#about">About</a><a href="#team">Team</a><a href="#contact" class="btn">Free Consultation</a></div></nav></div></header>
 <main>
-<section class="hero" id="home">
-  <div class="wrap">
-    <span class="tag">Your Digital Partner</span>
-    <h1>Crafting exceptional digital experiences &amp; digitising your business</h1>
-    <p> At Ashirvaad, we blend creativity, technology, and innovation to build stunning, high-performing websites that deliver seamless user experiences. We transform manual processes into smart digital solutions, helping businesses streamline operations, boost productivity, and scale effortlessly. Our goal is to empower your brand with the right digital tools to grow faster, work smarter, and connect meaningfully with your audience.</p>
-    <div class="cta">
-      <a href="#contact" class="btn">Get a Free Consultation</a>
-      <a href="#digitise" class="btn ghost">See how we digitise</a>
-    </div>
-    <div class="stats">
-      <div class="stat"><b>2026</b><span>Founded</span></div>
-      <div class="stat"><b>100%</b><span>Mobile-responsive builds</span></div>
-      <div class="stat"><b>24/7</b><span>Ongoing support</span></div>
-      <div class="stat"><b>End-to-end</b><span>Concept to maintenance</span></div>
-    </div>
-  </div>
-</section>
-
-<section id="services" class="alt">
-  <div class="wrap">
-    <span class="tag">What we do</span>
-    <h2>Our Core Capabilities</h2>
-    <p class="sub">Everything you need to build, grow and run your business online.</p>
-    <div class="grid">
-      <div class="card"><div class="ico">🎨</div><h3>Web Design &amp; UI/UX</h3><p>Crafting visually appealing, user-friendly interfaces that engage visitors from the first click.</p></div>
-      <div class="card"><div class="ico">💻</div><h3>Custom Web Development</h3><p>Scalable, secure and high-performance websites tailored to your unique business needs.</p></div>
-      <div class="card"><div class="ico">🛒</div><h3>E-commerce Solutions</h3><p>Online stores that convert visitors into loyal customers with seamless shopping experiences.</p></div>
-      <div class="card"><div class="ico">📈</div><h3>SEO &amp; Digital Marketing</h3><p>Boost your online visibility and drive targeted traffic for maximum reach.</p></div>
-      <div class="card"><div class="ico">🛠️</div><h3>Website Maintenance &amp; Support</h3><p>Keep your site secure, fast and up to date with continuous support and optimisation.</p></div>
-      <div class="card"><div class="ico">📱</div><h3>Mobile Responsiveness</h3><p>Sites that look and work flawlessly on every device, from desktops to smartphones.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="digitise">
-  <div class="wrap">
-    <span class="tag">Our main purpose</span>
-    <h2>Digitise your processes</h2>
-    <p class="sub">Replace paperwork, spreadsheets and phone calls with simple online systems that save time, cut errors and give you real-time visibility.</p>
-    <div class="grid" style="margin-bottom:36px">
-      <div class="card"><div class="ico">⚙️</div><h3>Workflow Automation</h3><ul><li>Approvals and task routing</li><li>Automatic reminders and alerts</li></ul></div>
-      <div class="card"><div class="ico">🗂️</div><h3>Online Portals &amp; Dashboards</h3><ul><li>Customer, vendor and staff portals</li><li>Live reports and analytics</li></ul></div>
-      <div class="card"><div class="ico">📄</div><h3>Document &amp; Records Digitisation</h3><ul><li>Secure cloud storage</li><li>Searchable digital records</li></ul></div>
-      <div class="card"><div class="ico">💳</div><h3>Online Booking &amp; Payments</h3><ul><li>Appointments and orders</li><li>Invoicing and payment gateways</li></ul></div>
-    </div>
-    <div class="steps">
-      <div class="step"><h3>Discover</h3><p>We map your current manual process and find where time is lost.</p></div>
-      <div class="step"><h3>Design</h3><p>We design a simple digital flow your team and customers will love.</p></div>
-      <div class="step"><h3>Build</h3><p>Agile development with regular demos and transparent communication.</p></div>
-      <div class="step"><h3>Launch &amp; Support</h3><p>Training, go-live and continuous improvement.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="portfolio" class="alt">
-  <div class="wrap">
-    <span class="tag">Portfolio</span>
-    <h2>Our Recent Work</h2>
-    <p class="sub">A selection of projects we’ve delivered for growing businesses.</p>
-    <div class="grid">
-      <div class="card proj"><div class="thumb">🛍️</div><h3>Modern E-commerce Platform</h3><p>A high-converting online store for a fashion brand, with intuitive navigation and secure payment gateways.</p><br><a href="#contact">View Project →</a></div>
-      <div class="card proj"><div class="thumb">📊</div><h3>SaaS Application Dashboard</h3><p>A sleek, user-friendly dashboard for a B2B SaaS product, enhancing user engagement.</p><br><a href="#contact">View Project →</a></div>
-      <div class="card proj"><div class="thumb">🏢</div><h3>Corporate Information Hub</h3><p>A robust corporate website with extensive content management and a focus on lead generation.</p><br><a href="#contact">View Project →</a></div>
-    </div>
-    <p style="margin-top:28px"><a href="#contact" class="btn ghost">See More Projects</a></p>
-  </div>
-</section>
-
-<section id="about">
-  <div class="wrap about">
-    <div>
-      <span class="tag">About us</span>
-      <h2>About Ashirvaad</h2>
-      <p>Founded in 2026, Ashirvaad emerged from a passion for digital innovation and a commitment to helping businesses thrive online. We are a team of dedicated designers, developers and digital strategists who believe a well-crafted website can transform a company’s presence and impact.</p>
-      <p>Our mission is to deliver tailor-made web solutions that look exceptional and perform flawlessly, meeting the unique challenges and goals of each client. We pride ourselves on transparent communication, agile development and a relentless pursuit of excellence.</p>
-      <p>From initial concept to ongoing support, we partner with you every step of the way. Let’s build something amazing together!</p>
-    </div>
-    <div class="vals">
-      <div><b>Our Mission</b><small>Tailor-made web and digitisation solutions that perform.</small></div>
-      <div><b>Transparent Communication</b><small>Clear updates at every stage of your project.</small></div>
-      <div><b>Agile Delivery</b><small>Fast iterations, early demos, flexible changes.</small></div>
-      <div><b>Excellence</b><small>Quality design and engineering in everything we ship.</small></div>
-    </div>
-  </div>
-</section>
-
-<section id="team" class="alt">
-  <div class="wrap">
-    <span class="tag">Our people</span>
-    <h2>Meet the Team</h2>
-    <p class="sub">The people who turn your digital vision into reality.</p>
-
-    <!-- EDIT: replace names, bios, emails and initials with real details -->
-    <div class="leader">
-      <div class="person">
-        <div class="avatar">CE</div>
-        <div><h3>Vishnu Kumar</h3><div class="role">Founder &amp; Chief Executive Officer [CEO]</div>
-        <!-- EDIT: replace YOUR-LINKEDIN-ID with your LinkedIn profile id -->
-        <a class="linkedin" href="https://www.linkedin.com/in/vishnu-kmr-b66b133a9/" target="_blank" rel="noopener" aria-label="LinkedIn profile"><span class="in-badge">in</span>LinkedIn</a>
-          <p>Leads the vision and strategy of Ashirvaad, with a passion for helping businesses go digital.</p>
-        <a class="mail" href="mailto:ceo.ashirvaad@gmail.com">ceo.ashirvaad@gmail.com</a></div>
-      </div>
-      <div class="person">
-        <div class="avatar">HR</div>
-        <div><h3>[HR Name]</h3><div class="role">Head of Human Resources</div>
-        <p>Builds our culture, hires great talent and makes sure every team member can do their best work.</p>
-        <a class="mail" href="mailto:TBD">TBD</a></div>
-      </div>
-    </div>
-
-    <div class="team">
-      <div class="person"><div class="avatar">T1</div><h3>[Team Member]</h3><div class="role">Lead Web Developer</div><p>Builds fast, secure and scalable applications.</p></div>
-      <div class="person"><div class="avatar">T2</div><h3>[Team Member]</h3><div class="role">UI/UX Designer</div><p>Designs intuitive, beautiful user experiences.</p></div>
-      <div class="person"><div class="avatar">T3</div><h3>[Team Member]</h3><div class="role">SEO &amp; Marketing Specialist</div><p>Grows visibility and drives targeted traffic.</p></div>
-      <div class="person"><div class="avatar">T4</div><h3>[Team Member]</h3><div class="role">Digital Process Analyst</div><p>Maps and automates business workflows.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="wrap contact">
-    <div class="info">
-      <span class="tag">Contact</span>
-      <h2>Get in Touch</h2>
-      <p>Ready to start your next digital project or digitise a process? Fill out the form and our team will get back to you shortly.</p>
-      <p>🌐 <a href="https://www.ashirvaad.in" style="color:var(--brand)">www.ashirvaad.in</a></p>
-      <p>✉️ <a href="mailto:ceo.ashirvaad@gmail.com" style="color:var(--brand)">ceo.ashirvaad@gmail.com</a> <!-- EDIT --></p>
-    </div>
-    <!-- EDIT: replace YOUR_FORM_ID with your Formspree form ID (formspree.io) -->
-    <form
-  action="https://formspree.io/f/mnpjyrop"
-  method="POST"
->
-  <label>
-    Your Email:
-    <input type="Email" name="email">
-  </label>
-  <label>
-    Your Message:
-    <textarea name="message"></textarea>
-  </label>
-  <!-- your other form fields go here -->
-  <button type="submit">Submit</button>
-</form>
-  </div>
-</section>
+<section class="hero" id="home"><div class="w"><span class="tag" id="h-tag"></span><h1 id="h-title"></h1><p id="h-text"></p>
+<div class="cta"><a href="#contact" class="btn" id="h-c1"></a><a href="#work" class="btn o" id="h-c2"></a></div><div class="stats" id="stats"></div></div></section>
+<section id="services" class="alt"><div class="w"><span class="tag">What we do</span><h2>Our Core Capabilities</h2><p class="sub">Everything you need to build, grow and run your business online.</p><div class="grid" id="services-g"></div></div></section>
+<section id="digitise"><div class="w"><span class="tag">Our main purpose</span><h2>Digitise your processes</h2><p class="sub">Replace paperwork, spreadsheets and phone calls with simple online systems.</p><div class="grid" id="dig-g"></div><div class="steps" id="steps"></div></div></section>
+<section id="work" class="alt"><div class="w"><span class="tag">Portfolio</span><h2>Our Work</h2><p class="sub">Watch our videos and browse recent projects.</p>
+<div class="fl" id="fl"><button class="on" data-f="all">All</button><button data-f="video">Videos</button><button data-f="image">Images</button></div><div class="gal" id="gal"></div></div></section>
+<section id="about"><div class="w about"><div><span class="tag">About us</span><h2 id="a-t"></h2><p id="a-1"></p><p id="a-2"></p></div><div class="vals" id="vals"></div></div></section>
+<section id="team" class="alt"><div class="w"><span class="tag">Our people</span><h2>Meet the Team</h2><p class="sub">The people who turn your digital vision into reality.</p><div class="team" id="team-g"></div></div></section>
+<section id="contact"><div class="w contact"><div class="info"><span class="tag">Contact</span><h2>Get in Touch</h2><p>Ready to start your next project? Send us a message and we'll reply shortly.</p><div id="c-info"></div><p><a class="btn" id="wa" style="display:none;margin-top:8px;color:#04121f">💬 Chat on WhatsApp</a></p></div>
+<form id="cf" method="POST"><label>Your name<input name="name" required></label><label>Your email<input type="email" name="email" required></label><label>Your message<textarea name="message" rows="4" required></textarea></label><button class="btn" type="submit">Send message</button></form></div></section>
 </main>
-
-<footer><div class="wrap"><div class="visitors">👥 Unique visitors: <b id="visitorCount">…</b></div><br>© <span id="yr">2026</span> Ashirvaad. All rights reserved. · Designed with ❤️ by your digital partner.</div></footer>
-
+<footer><div class="w"><p class="vis">👥 Unique visitors: <b id="vc">…</b></p><br>© <span id="yr"></span> <span id="fb">Ashirvaad</span>. All rights reserved.</div></footer>
+<div id="lb"><button aria-label="Close">×</button><div id="lbc" style="text-align:center"></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="site.js"></script>
 <script>
-document.getElementById('yr').textContent=new Date().getFullYear();
-const links=document.getElementById('links');
-document.getElementById('menu').onclick=()=>links.classList.toggle('open');
-links.querySelectorAll('a').forEach(a=>a.onclick=()=>links.classList.remove('open'));
-
-// Unique visitor counter (one count per browser)
-(async function () {
-  const el = document.getElementById('visitorCount');
-  const base = 'https://api.counterapi.dev/v1/ashirvaad-in/unique-visitors';
-  try {
-    let isNew = true;
-    try { isNew = !localStorage.getItem('aas_visited'); } catch (e) {}
-    const res = await fetch(isNew ? base + '/up' : base);
-    const data = await res.json();
-    const n = data.count ?? data.value ?? 0;
-    el.textContent = Number(n).toLocaleString('en-IN');
-    if (isNew) { try { localStorage.setItem('aas_visited', '1'); } catch (e) {} }
-  } catch (e) {
-    el.textContent = '–';
-  }
+const $=s=>document.querySelector(s),E=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ok=!SB_URL.startsWith('YOUR_');let sb=ok?supabase.createClient(SB_URL,SB_KEY):null,MEDIA=[];
+const L=(a,f)=>(a||[]).map(f).join('');
+function render(c){
+ $('#brand').textContent=$('#fb').textContent=c.brand.name;document.title=c.brand.name+' – '+c.hero.tag;
+ $('#h-tag').textContent=c.hero.tag;$('#h-title').textContent=c.hero.title;$('#h-text').textContent=c.hero.text;$('#h-c1').textContent=c.hero.cta1;$('#h-c2').textContent=c.hero.cta2;
+ $('#stats').innerHTML=L(c.stats,x=>`<div class="stat rv"><b>${E(x.n)}</b><span>${E(x.l)}</span></div>`);
+ $('#services-g').innerHTML=L(c.services,x=>`<div class="card rv"><div class="ico">${E(x.icon)}</div><h3>${E(x.title)}</h3><p>${E(x.text)}</p></div>`);
+ $('#dig-g').innerHTML=L(c.digitise,x=>`<div class="card rv"><div class="ico">${E(x.icon)}</div><h3>${E(x.title)}</h3><p>${E(x.text)}</p></div>`);
+ $('#steps').innerHTML=L(c.steps,x=>`<div class="step rv"><h3>${E(x.title)}</h3><p>${E(x.text)}</p></div>`);
+ $('#a-t').textContent=c.about.title;$('#a-1').textContent=c.about.p1;$('#a-2').textContent=c.about.p2;
+ $('#vals').innerHTML=L(c.values,x=>`<div class="v rv"><b>${E(x.t)}</b><small>${E(x.d)}</small></div>`);
+ $('#team-g').innerHTML=L(c.team,x=>`<div class="person rv">${x.photo?`<img class="av" src="${E(x.photo)}" alt="${E(x.name)}">`:`<div class="av">${E(x.name.split(' ').map(w=>w[0]).join('').slice(0,2))}</div>`}<h3>${E(x.name)}</h3><div class="role">${E(x.role)}</div><p>${E(x.bio)}</p>${x.linkedin?`<a class="s" href="${E(x.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>`:''}${x.email?`<a class="s" href="mailto:${E(x.email)}">${E(x.email)}</a>`:''}</div>`);
+ const k=c.contact;$('#c-info').innerHTML=(k.email?`<p>✉️ <a href="mailto:${E(k.email)}">${E(k.email)}</a></p>`:'')+(k.phone?`<p>📞 <a href="tel:${E(k.phone)}">${E(k.phone)}</a></p>`:'')+(k.address?`<p>📍 ${E(k.address)}</p>`:'');
+ if(k.whatsapp){const w=$('#wa');w.style.display='inline-block';w.href='https://wa.me/'+k.whatsapp.replace(/\D/g,'');w.target='_blank'}
+ $('#cf').action='https://formspree.io/f/'+k.formspree;
+ reveal();
+}
+function gallery(f='all'){
+ const a=MEDIA.filter(m=>f=='all'||m.kind==f);
+ $('#gal').innerHTML=a.length?a.map(m=>`<div class="m rv" data-id="${m.id}"><div class="th"><img loading="lazy" src="${E(m.thumb||m.url)}" alt="${E(m.title)}">${m.kind=='video'?'<div class="play"><i>▶</i></div>':''}</div><div class="tx"><h3>${E(m.title)}</h3>${m.descr?`<p>${E(m.descr)}</p>`:''}</div></div>`).join(''):'<p class="empty">Projects and videos will appear here soon.</p>';
+ reveal();
+}
+function reveal(){const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');o.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll('.rv:not(.in)').forEach(n=>o.observe(n))}
+$('#fl').onclick=e=>{const f=e.target.dataset.f;if(!f)return;document.querySelectorAll('#fl button').forEach(b=>b.classList.toggle('on',b==e.target));gallery(f)};
+$('#gal').onclick=e=>{const d=e.target.closest('.m');if(!d)return;const m=MEDIA.find(x=>x.id==d.dataset.id);
+ $('#lbc').innerHTML=(m.kind=='video'?`<video src="${E(m.url)}" poster="${E(m.thumb)}" controls autoplay playsinline></video>`:`<img src="${E(m.url)}" alt="">`)+`<h3>${E(m.title)}</h3>`;$('#lb').classList.add('on')};
+const closeLb=()=>{$('#lb').classList.remove('on');$('#lbc').innerHTML=''};
+$('#lb').onclick=e=>{if(e.target.id=='lb'||e.target.tagName=='BUTTON')closeLb()};document.onkeydown=e=>e.key=='Escape'&&closeLb();
+$('#menu').onclick=()=>$('#links').classList.toggle('open');$('#links').onclick=()=>$('#links').classList.remove('open');$('#yr').textContent=new Date().getFullYear();
+(async()=>{let c=DEFAULTS;
+ if(ok){try{const[r,m]=await Promise.all([sb.from('site_content').select('data').eq('id',1).maybeSingle(),sb.from('media').select('*').order('created_at',{ascending:false})]);
+  if(r.data)c={...DEFAULTS,...r.data.data};MEDIA=m.data||[]}catch(e){}}
+ render(c);gallery();
+ try{const b='https://api.counterapi.dev/v1/ashirvaad-in/unique-visitors';let n=1;try{n=!localStorage.getItem('av')}catch(e){}
+  const d=await(await fetch(n?b+'/up':b)).json();$('#vc').textContent=Number(d.count??0).toLocaleString('en-IN');try{localStorage.setItem('av','1')}catch(e){}}catch(e){$('#vc').textContent='–'}
 })();
-</script>
-</body>
-</html>
+</script></body></html>

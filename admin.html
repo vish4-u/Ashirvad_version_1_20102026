@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Admin – Ashirvaad</title>
+<style>
+:root{--bg:#050b18;--s:#0d1730;--t:#eaf2ff;--m:#9db0cc;--b:#38bdf8;--l:#1e2e4d;--r:#f87171}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--t);line-height:1.5}
+.w{max-width:960px;margin:0 auto;padding:20px}header{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+h1{font-size:1.3rem}h2{font-size:1.1rem;margin-bottom:12px}a{color:var(--b)}
+.card{background:var(--s);border:1px solid var(--l);border-radius:14px;padding:18px;margin-bottom:16px}
+label{display:block;font-size:.82rem;font-weight:600;color:var(--m);margin-top:10px}
+input,textarea{width:100%;padding:10px;margin-top:4px;border-radius:8px;border:1px solid var(--l);background:var(--bg);color:var(--t);font:inherit}
+button{background:linear-gradient(135deg,#38bdf8,#2dd4bf);color:#04121f;border:0;border-radius:9px;padding:10px 18px;font-weight:700;cursor:pointer;font:inherit;font-weight:700}
+button.g{background:none;border:1px solid var(--l);color:var(--t)}button.d{background:none;border:1px solid var(--r);color:var(--r);padding:6px 12px}button:disabled{opacity:.5}
+.tabs{display:flex;gap:8px;margin-bottom:16px}.tabs button{background:none;border:1px solid var(--l);color:var(--m)}.tabs button.on{background:var(--s);color:var(--t);border-color:var(--b)}
+.row{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}.it{border:1px solid var(--l);border-radius:12px;overflow:hidden;background:var(--bg)}.it img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}.it div{padding:10px;font-size:.9rem}
+details{margin-bottom:12px}summary{cursor:pointer;font-weight:700;padding:12px 16px;background:var(--s);border:1px solid var(--l);border-radius:12px}details[open] summary{border-radius:12px 12px 0 0}details>.in{padding:14px;border:1px solid var(--l);border-top:0;border-radius:0 0 12px 12px;background:var(--s)}
+.sub{border:1px dashed var(--l);border-radius:10px;padding:12px;margin-bottom:12px}#msg{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--s);border:1px solid var(--b);padding:10px 20px;border-radius:10px;display:none;z-index:9}
+#pv{max-width:100%;max-height:240px;border-radius:10px;margin-top:10px;display:none}.th{max-height:110px;border-radius:8px;margin-top:8px;display:none}small{color:var(--m)}
+</style></head><body><div class="w" id="app"></div><div id="msg"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="site.js"></script>
+<script>
+const $=s=>document.querySelector(s),E=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const sb=supabase.createClient(SB_URL,SB_KEY),B=()=>sb.storage.from('media'),T='¶';
+const SCHEMA=[['brand','Business name',{name:'Name'}],
+['hero','Home banner',{tag:'Small tag line',title:'Headline',text:T+'Intro text',cta1:'Button 1 text',cta2:'Button 2 text'}],
+['stats','Numbers / stats',[{n:'Number',l:'Label'}]],
+['services','Services',[{icon:'Emoji icon',title:'Title',text:T+'Description'}]],
+['digitise','Digitisation cards',[{icon:'Emoji icon',title:'Title',text:T+'Description'}]],
+['steps','Process steps',[{title:'Title',text:T+'Description'}]],
+['about','About us',{title:'Heading',p1:T+'Paragraph 1',p2:T+'Paragraph 2'}],
+['values','About – highlights',[{t:'Title',d:'Description'}]],
+['team','Team members',[{name:'Name',role:'Role',bio:T+'Bio',email:'Email',linkedin:'LinkedIn URL',photo:'Photo'}]],
+['contact','Contact details',{email:'Email',phone:'Phone',whatsapp:'WhatsApp number (with country code, e.g. 919876543210)',address:'Address',formspree:'Formspree form ID'}]];
+let D,tab='media',thumb=null,file=null;
+function msg(t){const m=$('#msg');m.textContent=t;m.style.display='block';clearTimeout(msg.t);msg.t=setTimeout(()=>m.style.display='none',3500)}
+function login(){$('#app').innerHTML=`<div class="card" style="max-width:380px;margin:12vh auto"><h1>Admin login</h1><label>Email<input id="em" type="email"></label><label>Password<input id="pw" type="password"></label><p style="margin-top:14px"><button id="go">Log in</button></p></div>`;
+ $('#go').onclick=async()=>{const{error}=await sb.auth.signInWithPassword({email:$('#em').value,password:$('#pw').value});error?msg(error.message):start()}}
+async function start(){const{data:{session}}=await sb.auth.getSession();if(!session)return login();
+ const r=await sb.from('site_content').select('data').eq('id',1).maybeSingle();D={...structuredClone(DEFAULTS),...(r.data?.data||{})};shell()}
+function shell(){$('#app').innerHTML=`<header><h1>⚙️ Website admin</h1><div><a href="index.html" target="_blank">View site ↗</a> &nbsp; <button class="g" id="lo">Log out</button></div></header>
+<div class="tabs"><button data-t="media" class="${tab=='media'?'on':''}">🎬 Videos & Images</button><button data-t="content" class="${tab=='content'?'on':''}">📝 Website content</button></div><div id="pane"></div>`;
+ $('#lo').onclick=async()=>{await sb.auth.signOut();login()};document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;shell()});tab=='media'?mediaTab():contentTab()}
+// ---------- MEDIA ----------
+function grab(v){const c=document.createElement('canvas'),w=Math.min(v.videoWidth,960);c.width=w;c.height=w*v.videoHeight/v.videoWidth;c.getContext('2d').drawImage(v,0,0,c.width,c.height);return new Promise(r=>c.toBlob(r,'image/jpeg',.82))}
+const show=(blob)=>{const i=$('#thp');i.src=URL.createObjectURL(blob);i.style.display='block'};
+async function mediaTab(){thumb=file=null;
+ $('#pane').innerHTML=`<div class="card"><h2>Upload new</h2><label>Title<input id="mt"></label><label>Description (optional)<textarea id="md" rows="2"></textarea></label>
+ <label>Video or image file<input id="mf" type="file" accept="video/*,image/*"></label><video id="pv" controls playsinline></video>
+ <p id="fr" style="display:none;margin-top:8px"><button class="g" id="cap">📸 Use current frame as thumbnail</button></p><img id="thp" class="th" alt="thumbnail">
+ <label>Or upload your own thumbnail (optional)<input id="mc" type="file" accept="image/*"></label><p style="margin-top:14px"><button id="up">Upload & publish</button> <small id="st"></small></p>
+ <small>Videos are limited to 50 MB on Supabase's free plan. Compress bigger videos first.</small></div><div class="card"><h2>Published</h2><div class="row" id="ml">Loading…</div></div>`;
+ $('#mf').onchange=e=>{file=e.target.files[0];thumb=null;if(!file)return;const isV=file.type.startsWith('video'),pv=$('#pv');$('#thp').style.display='none';
+  if(!isV){pv.style.display='none';$('#fr').style.display='none';return}
+  pv.dataset.m='';pv.style.display='block';$('#fr').style.display='block';pv.src=URL.createObjectURL(file);
+  pv.onloadeddata=()=>{pv.currentTime=Math.min(1,pv.duration/4)};pv.onseeked=async()=>{if(!thumb||!pv.dataset.m){thumb=await grab(pv);show(thumb);pv.dataset.m=1}}};
+ $('#cap').onclick=async()=>{thumb=await grab($('#pv'));show(thumb)};
+ $('#mc').onchange=e=>{if(e.target.files[0]){thumb=e.target.files[0];show(thumb)}};
+ $('#up').onclick=upload;listMedia()}
+async function upload(){if(!file)return msg('Choose a file first');const t=$('#mt').value.trim();if(!t)return msg('Enter a title');
+ const b=$('#up');b.disabled=true;$('#st').textContent='Uploading… please wait';const id=Date.now(),isV=file.type.startsWith('video');
+ try{let p=`${id}-${file.name.replace(/[^\w.-]/g,'_')}`,r=await B().upload(p,file,{cacheControl:'31536000',contentType:file.type});if(r.error)throw r.error;
+  const url=B().getPublicUrl(p).data.publicUrl;let th=null;
+  if(thumb){const tp=`thumbs/${id}.jpg`,x=await B().upload(tp,thumb,{contentType:thumb.type||'image/jpeg'});if(x.error)throw x.error;th=B().getPublicUrl(tp).data.publicUrl}
+  const i=await sb.from('media').insert({kind:isV?'video':'image',title:t,descr:$('#md').value.trim(),url,thumb:th});if(i.error)throw i.error;
+  msg('✅ Published! It is now live on your website.');mediaTab()}catch(e){msg('Error: '+e.message);b.disabled=false;$('#st').textContent=''}}
+async function listMedia(){const{data}=await sb.from('media').select('*').order('created_at',{ascending:false});
+ $('#ml').innerHTML=data?.length?data.map(m=>`<div class="it"><img src="${E(m.thumb||m.url)}" alt=""><div><b>${E(m.title)}</b><br><small>${m.kind}</small><p style="margin-top:8px"><button class="d" data-id="${m.id}">Delete</button></p></div></div>`).join(''):'<small>Nothing uploaded yet.</small>';
+ $('#ml').onclick=async e=>{const id=e.target.dataset.id;if(!id||!confirm('Delete this permanently?'))return;const m=data.find(x=>x.id==id),ps=[m.url,m.thumb].filter(Boolean).map(u=>decodeURIComponent(u.split('/media/')[1]));
+  await B().remove(ps);await sb.from('media').delete().eq('id',id);msg('Deleted');listMedia()}}
+// ---------- CONTENT ----------
+const gp=p=>p.split('.').reduce((o,k)=>o?.[k],D);
+function setp(p,v){const a=p.split('.'),l=a.pop();a.reduce((o,k)=>o[k],D)[l]=v}
+function field(p,k,lab,v){if(k=='photo')return`<label>${lab}<input type="file" accept="image/*" data-up="${p}"></label>${v?`<img class="th" style="display:block" src="${E(v)}" alt="">`:''}`;
+ return lab[0]==T?`<label>${lab.slice(1)}<textarea rows="3" data-p="${p}">${E(v)}</textarea></label>`:`<label>${lab}<input data-p="${p}" value="${E(v)}"></label>`}
+function contentTab(){$('#pane').innerHTML=SCHEMA.map(([k,t,f])=>`<details><summary>${t}</summary><div class="in">`+(Array.isArray(f)?
+  D[k].map((it,i)=>`<div class="sub">${Object.entries(f[0]).map(([fk,l])=>field(`${k}.${i}.${fk}`,fk,l,it[fk])).join('')}<p style="margin-top:10px"><button class="d" data-del="${k}.${i}">Remove</button></p></div>`).join('')+`<button class="g" data-add="${k}">+ Add</button>`:
+  Object.entries(f).map(([fk,l])=>field(`${k}.${fk}`,fk,l,D[k][fk])).join(''))+`</div></details>`).join('')+`<p><button id="sv">💾 Save all changes</button></p>`;
+ const open=contentTab.o||[];document.querySelectorAll('details').forEach((d,i)=>{d.open=open[i];d.ontoggle=()=>{contentTab.o=[...document.querySelectorAll('details')].map(x=>x.open)}});
+ $('#pane').oninput=e=>{if(e.target.dataset.p)setp(e.target.dataset.p,e.target.value)};
+ $('#pane').onchange=async e=>{const p=e.target.dataset.up,f=e.target.files?.[0];if(!p||!f)return;msg('Uploading photo…');const n=`photos/${Date.now()}-${f.name.replace(/[^\w.-]/g,'_')}`,r=await B().upload(n,f);if(r.error)return msg(r.error.message);setp(p,B().getPublicUrl(n).data.publicUrl);contentTab()};
+ $('#pane').onclick=e=>{const d=e.target.dataset;if(d.del){const a=d.del.split('.');D[a[0]].splice(+a[1],1);contentTab()}
+  if(d.add){const f=SCHEMA.find(s=>s[0]==d.add)[2][0];D[d.add].push(Object.fromEntries(Object.keys(f).map(x=>[x,''])));contentTab.o=null;contentTab();const ds=document.querySelectorAll('details');ds[SCHEMA.findIndex(s=>s[0]==d.add)].open=true}}
+ $('#sv').onclick=async()=>{const r=await sb.from('site_content').upsert({id:1,data:D});msg(r.error?'Error: '+r.error.message:'✅ Saved – website updated')}}
+start();
+</script></body></html>
