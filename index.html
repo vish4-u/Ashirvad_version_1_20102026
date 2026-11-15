@@ -94,6 +94,95 @@ footer h4{color:var(--t);margin-bottom:12px;font-size:1rem}footer a{display:bloc
 </main>
 <footer><div class="w"><div class="fg"><div><a class="logo" href="#home" id="fl-b"></a><p id="f-about"></p><div class="soc" id="soc"></div></div><div><h4>Quick links</h4><div id="f-q"></div></div><div><h4>Services</h4><div id="f-s"></div></div><div><h4>Contact</h4><div id="f-c"></div></div></div>
 <div class="fbt">© <span id="yr"></span> <span id="fb">Ashirvaad Nexora Technologies</span>. All rights reserved. <span id="f-note"></span> <span id="f-l"></span></div></div></footer>
+<style>
+  /* Fixed = floats above the page, never takes space in the layout.
+     !important on key rules stops your site's footer/link CSS from changing it. */
+  a.ash-wa {
+    position: fixed !important;
+    right: 20px !important;
+    left: auto !important;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px)) !important;
+    top: auto !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    border: 0 !important;
+    text-decoration: none !important;
+    font-family: inherit !important;
+  }
+  a.ash-wa .ash-wa__label {
+    display: block !important;
+    background: #ffffff !important;
+    color: #111b21 !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    padding: 10px 14px !important;
+    margin: 0 !important;
+    border-radius: 999px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    white-space: nowrap !important;
+  }
+  a.ash-wa .ash-wa__icon {
+    position: relative !important;
+    display: grid !important;
+    place-items: center !important;
+    width: 58px !important;
+    height: 58px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    background: #25d366 !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+  }
+  a.ash-wa .ash-wa__icon svg { width: 32px !important; height: 32px !important; fill: #ffffff !important; }
+  a.ash-wa:hover .ash-wa__icon { transform: scale(1.08); }
+  a.ash-wa:focus-visible { outline: 3px solid #ffffff; outline-offset: 4px; border-radius: 999px; }
+
+  a.ash-wa .ash-wa__icon::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid #25d366;
+    animation: ash-wa-pulse 2.4s ease-out infinite;
+  }
+  @keyframes ash-wa-pulse {
+    0%   { transform: scale(1);   opacity: 0.8; }
+    100% { transform: scale(1.7); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    a.ash-wa .ash-wa__icon::after { animation: none; }
+    a.ash-wa .ash-wa__icon { transition: none; }
+  }
+
+  /* phones: icon only, slightly smaller so it stays clear of footer text */
+  @media (max-width: 600px) {
+    a.ash-wa .ash-wa__label { display: none !important; }
+    a.ash-wa { right: 14px !important; bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important; }
+    a.ash-wa .ash-wa__icon { width: 52px !important; height: 52px !important; }
+  }
+</style>
+
+<a class="ash-wa"
+   href="https://wa.me/91XXXXXXXXXX?text=Hello%20Ashirvaad%20Nexora%20Technologies%2C%20I%20visited%20your%20website%20and%20would%20like%20to%20know%20more%20about%20your%20services."
+   target="_blank"
+   rel="noopener noreferrer"
+   aria-label="Chat with us on WhatsApp">
+  <span class="ash-wa__label">Chat on WhatsApp</span>
+  <span class="ash-wa__icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.23 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.23-.16-.48-.29Z"/>
+    </svg>
+  </span>
+</a>
 <a class="wf" id="wf" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.9L2 22l5.2-1.4A9.9 9.9 0 1 0 12.04 2zm5.8 14.1c-.25.7-1.4 1.3-1.95 1.35-.5.05-1.1.07-1.8-.12-.4-.13-.95-.3-1.6-.6-2.8-1.2-4.6-4-4.75-4.2-.14-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.25-.3.55-.35.75-.35h.5c.17 0 .4-.05.6.45.25.55.8 1.9.87 2.05.07.14.1.3 0 .5-.1.2-.15.3-.3.5-.15.17-.3.37-.43.5-.15.15-.3.3-.13.6.17.3.75 1.25 1.6 2 1.1.98 2 1.3 2.3 1.43.3.14.47.12.65-.07.2-.2.75-.87.95-1.17.2-.3.4-.25.67-.15.27.1 1.7.8 2 .95.3.15.5.22.57.35.07.1.07.7-.18 1.4z"/></svg></a>
 <div id="lb"><button aria-label="Close">×</button><div id="lbc" style="text-align:center"></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
